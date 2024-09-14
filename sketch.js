@@ -1,51 +1,35 @@
 console.log("test")
 
-const container = document.querySelector(".boxContainer");
-const boxes = document.querySelector("boxes");
+const container = document.querySelector(".container");
+const head = document.querySelector("head");
 
-let rowNumber = 16 // default 16 boxes on each row
-let size = 256 // default 256 boxes in total
-let opacity = 10 // default %10 opacity
+const itemStyle = document.createElement("style");
+itemStyle.textContent = `
+    .items {
+        flex-basis: calc(100% / 16);
+    }`
+head.appendChild(itemStyle);
 
-function drawBoxes(size) {
-    let sqrtBox = Math.sqrt(size)
-    let boxSize = Math.floor((960 / sqrtBox)) + 'px'; 
-    for (let index = 0; index < size; index++) {
-        let newBox = document.createElement("div")
-        newBox.className = "box"
-        newBox.style.height = boxSize
-        newBox.style.width = boxSize
-        boxContainer.appendChild(newBox)
-    }
+for (let i = 0; i < 256; i++) {
+    const newDiv = document.createElement("div");
+    newDiv.setAttribute("class", "items");
+    container.appendChild(newDiv);
+} 
+
+const itemList = document.querySelectorAll(".items");
+itemList.forEach(modifyColor);
+
+function modifyColor(item) {
+    item.addEventListener("mouseover", (e) => {
+        item.style.backgroundColor = randomRGB();
+    })
+};
+
+
+function randomRGB() {
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return `rgba(${r}, ${g}, ${b}, .1)`
 }
 
-function randomColors() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-
-    return `rgb(${r}, ${g}, ${b}, ${opacity}%)`;
-}
-
-document.addEventListener("mouseover", (event)=>{
-    if (event.target.classList.contains('box')) {
-        opacity += 0.5
-        if (opacity > 100) opacity = 100;
-        event.target.style.backgroundColor = randomColors()
-    }
-})
-
-configBtn.addEventListener("click",() => {
-    opacity = 10
-    boxContainer.innerHTML = ''; 
-    rowNumber = Number(prompt("Enter row size(e.g., 10 for a 10x10 grid max:16):"), 16);
-
-    if (isNaN(rowNumber) || rowNumber <= 0 || rowNumber > 16) {
-        rowNumber = 16; // Default value
-    }
-
-    size = Math.pow(rowNumber,2)
-    drawBoxes(size)
-})
-
-document.addEventListener("DOMContentLoaded",() => drawBoxes(size))

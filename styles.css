@@ -1,34 +1,26 @@
-
-* {
-    box-sizing: border-box;
-}
-.input{
-    max-width: 50%;
-    font-size: 1.5rem;
-    padding: 10px;
-    border:0;
-    border-radius: 10px;
-    margin-bottom: 10px;
+html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
 }
 
-.footer{
-    text-align: center;
-}
-
-.main{
+body {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
 }
 
-.box-container{
+
+.container {
+    border: 3px, solid, black;
+    height: 80%;
+    aspect-ratio: 1;
     display: flex;
-    width: 964px;
-    height: 964px;
-    border: 2px solid #777;
     flex-wrap: wrap;
 }
 
-.box{
-    min-width: 60px;
-    min-height: 60px;
+.items {
+    border: 1px, black, solid;
+    box-sizing: border-box;
 }
